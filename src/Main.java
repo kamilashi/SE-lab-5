@@ -5,7 +5,11 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Component;
 import java.awt.Point;
+import java.io.IOException;
+
 import javax.swing.SwingConstants;
+
+import lib.MapStorage;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -15,7 +19,7 @@ import javax.swing.ImageIcon;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		//gui.ModeMenuFrame modeMenuFrame = new gui.ModeMenuFrame();
 		
 		  gui.RegionModeFrame regionModeFrame = new gui.RegionModeFrame();
@@ -43,7 +47,6 @@ public class Main {
 			gui.MapPainter mapPainter = new gui.MapPainter(lib.MapStorage.getMap());
 			
 			
-			
 			centerPanel.add(mapPainter);
 			
 			JPanel westPanel = new JPanel();
@@ -60,13 +63,8 @@ public class Main {
 			FlowLayout flowLayout = (FlowLayout) southPanel.getLayout();
 			flowLayout.setVgap(70);
 			mainPanel.add(southPanel, BorderLayout.SOUTH);
-			//regionModeFrame.pack();   
 			
-			
-		  	//Graphics g = mapIcon.getGraphics();
-		  	//gui.MapPainter mapPainter = new gui.MapPainter();
-		  	//
-		  	//mapPainter.paint(g);
+			lib.MapStorage.saveMap();
 			
 			
 		

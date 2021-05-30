@@ -37,13 +37,12 @@ import lib.Map;
 	         Color backgroundColor = new Color(240,240,240); 
 	         setBackground(backgroundColor);  // set background color for this JPanel
 	 
-	         int roomIndex;
 	         
-	         for (roomIndex = 0; roomIndex < map.roomsCount; roomIndex++) {
+	         for (Map.Room room: map.rooms) {
 	         g.setColor(Color.BLACK); 
-	         g.drawRect(map.rooms[roomIndex].x, map.rooms[roomIndex].y, map.rooms[roomIndex].width,map.rooms[roomIndex].length);
+	         g.drawRect(room.x, room.y, room.width, room.length);
 	         g.setColor(backgroundColor);
-	         g.drawLine(map.rooms[roomIndex].doorX1, map.rooms[roomIndex].doorY1, map.rooms[roomIndex].doorX2, map.rooms[roomIndex].doorY2);
+	         g.drawLine(room.doorX1, room.doorY1, room.doorX2, room.doorY2);
 	         }
 	         
 		         //g.setColor(Color.BLACK); 

@@ -1,13 +1,15 @@
 package lib;
 
+import java.util.ArrayList;
+
 public class Map {
 	public int roomsCount;
-	public Room[] rooms;
+	public ArrayList<Room> rooms;
 	
 	public Map()
 	{
 		this.roomsCount = 0;
-		rooms = new Room[10];				//current room limit = 10
+		rooms = new ArrayList<Room>();				//current room limit = 10
 	}
 	
 	public void addRoom(int x, int y, int w, int l, int dX1, int dY1, int dX2, int dY2) 
@@ -15,7 +17,7 @@ public class Map {
 		if(roomsCount<10)
 		{
 		Room room = new Room(x,y,w,l,dX1,dY1,dX2,dY2);
-		rooms[roomsCount] = room;
+		rooms.add(room);
 		roomsCount++;
 		}
 	}

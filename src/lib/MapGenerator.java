@@ -1,10 +1,11 @@
 package lib;
 
 import java.awt.Color;
+import java.io.IOException;
 
 public class MapGenerator {
 	
-	public MapGenerator()
+	public MapGenerator() throws IOException
 	
 	{
 		Map map = new Map();
