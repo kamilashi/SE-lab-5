@@ -14,6 +14,7 @@ public class MapGenerator {
 		map.addRoom(0, 0, 140, 140, 70, 140, 110, 140);
 		map.addRoom(140, 0, 140, 140, (140+70), 140, (140+30), 140);
 		MapStorage.storeMap(map);
+		//MapStorage.resetMap();
 	}
 
 }

@@ -45,6 +45,7 @@ public abstract class MapStorage {
 	{
 		String jsonObject = new String(Files.readAllBytes(Paths.get("src//maps//map.json")));
 		MapData mapData = new Gson().fromJson(jsonObject, MapData.class);
+		currentMap.setMapData(mapData);
 		return mapData;
 	}
 	

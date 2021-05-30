@@ -18,6 +18,7 @@ public class Map {
 		this.roomsCount = 0;
 		rooms = new ArrayList<Room>();				//current room limit = 10
 		coordinates = new HashMap< Tuple, Boolean>();
+		
 	}
 	
 	public void addRoom(int x, int y, int w, int l, int dX1, int dY1, int dX2, int dY2) 
@@ -27,7 +28,6 @@ public class Map {
 		Room room = new Room(x,y,w,l,dX1,dY1,dX2,dY2);
 		rooms.add(room);
 		roomsCount++;
-		
 		
 		}
 	}
@@ -42,17 +42,14 @@ public class Map {
 				for ( j = room.y; j<(room.y+room.length); j++)
 				{
 					coordinates.put(new Tuple(i,j), true);
-					//System.out.println("adding tuple " + i + " , " + j);
 				}
 			}
-			
 		}
-		
 		
 	}
 	public MapData getMapData()
 	{
-		if(coordinates.get(new Tuple(0,0))==null)
+		if(coordinates.isEmpty())
 		{
 			resetMapData();
 		}
@@ -62,6 +59,20 @@ public class Map {
             Collectors.toCollection(ArrayList::new));
 		MapData mapData = new MapData(coodrs);
 		return mapData;
+	}
+	
+	
+	public void updateMapData(ArrayList<Tuple> tuples) {
+
+		if(coordinates.isEmpty())
+		{
+			System.out.println("no coordinates yet");
+		}
+		else
+		{
+			for (Tuple tuple: tuples)
+			{coordinates.remove(tuple);}
+		}
 	}
 	
 	public class Room{
@@ -91,8 +102,8 @@ public class Map {
 	public class MapData
 	{
 		public ArrayList<Tuple> validCoordinates;
-		public MapData(ArrayList<Tuple> objects) {
-			validCoordinates = objects;
+		public MapData(ArrayList<Tuple> tuples) {
+			validCoordinates = tuples;
 		}
 		public ArrayList<Tuple> getCoordinates() {
 			return validCoordinates;
@@ -107,6 +118,18 @@ public class Map {
 			this.X = x;
 			this.Y = y;
 		}
+		
+	}
+
+	public void setMapData(MapData mapData) {
+		ArrayList<Tuple> tuples = mapData.getCoordinates();
+		
+		for (Tuple tuple : tuples)
+		{
+			coordinates.put(tuple, true);
+		}
+		
+		System.out.println("Setting loaded coords");
 		
 	}
 

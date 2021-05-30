@@ -6,9 +6,11 @@ import java.awt.Graphics;
 import java.awt.Component;
 import java.awt.Point;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.SwingConstants;
 
+import lib.Map.Tuple;
 import lib.MapStorage;
 
 import java.awt.Dimension;
@@ -19,10 +21,15 @@ import javax.swing.ImageIcon;
 
 public class Main {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, InterruptedException {
 		//gui.ModeMenuFrame modeMenuFrame = new gui.ModeMenuFrame();
 		
 		  gui.RegionModeFrame regionModeFrame = new gui.RegionModeFrame();
+		  lib.MapGenerator generator = new lib.MapGenerator();
+
+			
+			
+			
 		  
 		  JPanel mainPanel = new JPanel();
 		  regionModeFrame.getContentPane().add(mainPanel, BorderLayout.CENTER);
@@ -42,12 +49,15 @@ public class Main {
 			mainPanel.add(centerPanel, BorderLayout.CENTER);
 			centerPanel.setLayout(new BorderLayout(0, 0));
 			
+
+
 			
-			lib.MapGenerator generator = new lib.MapGenerator();
-			gui.MapPainter mapPainter = new gui.MapPainter(lib.MapStorage.getMap());
 			
-			
+			gui.MapPainter mapPainter = new gui.MapPainter();
 			centerPanel.add(mapPainter);
+			//lib.MapStorage.saveSettings();
+			
+			
 			
 			JPanel westPanel = new JPanel();
 			FlowLayout fl_westPanel = (FlowLayout) westPanel.getLayout();
@@ -64,10 +74,23 @@ public class Main {
 			flowLayout.setVgap(70);
 			mainPanel.add(southPanel, BorderLayout.SOUTH);
 			
-			lib.MapStorage.saveSettings();
-			//mapPainter.fillCanvas();
 			
-		
+
+			ArrayList<lib.Map.Tuple> excluded = new ArrayList<lib.Map.Tuple>();
+			
+			for(int i=0;i<50;i++) {
+				for(int j=0;j<50;j++) {
+					excluded.add(MapStorage.getMap().new Tuple(i,j));
+				}
+			}
+			MapStorage.getMap().updateMapData(excluded);
+			
+			MapStorage.loadSettings();
+			
+			mapPainter.repaint();
+			regionModeFrame.repaint();
+			//lib.MapStorage.saveSettings();
+			
 	}
 
 }

@@ -22,25 +22,12 @@ import lib.MapStorage;
 		 */
 		private static final long serialVersionUID = 6890456050991712169L;
 		
-		private Map map;
 		private BufferedImage canvas;
 		
-		public MapPainter(Map map)
+		public MapPainter( )
 		{
 			
-			this.map = map;
-			//int width = 250;
-	       // int height = 250;
-	 
-	        // Constructs a BufferedImage of one of the predefined image types.
-	        //BufferedImage canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-			//this.add(canvas);
-	         
 		}
-		
-//			public MapPainter()
-//				{
-//				}
 
 		@Override
 	      public void paintComponent(Graphics g) {
@@ -49,8 +36,9 @@ import lib.MapStorage;
 	         Color backgroundColor = new Color(240,240,240); 
 	         setBackground(backgroundColor);  // set background color for this JPanel
 	         Color validCoordinateColor = new Color(173, 216, 230);
-	 
-	         try {Map.MapData mapData = MapStorage.loadSettings();							//printing the valid coordinates
+	         
+	         Map map = MapStorage.getMap();
+	         Map.MapData mapData = map.getMapData();							//rendering valid coordinates
 					for (Tuple tuple :  mapData.getCoordinates())
 					{
 						int x = tuple.X;
@@ -58,40 +46,16 @@ import lib.MapStorage;
 						g.setColor(validCoordinateColor);
 						g.drawLine(x,y,x,y);
 					}
-				} catch (IOException e) {e.printStackTrace();}
 	         
 	         
-	         for (Map.Room room: map.rooms) {												//printing the border
+	         for (Map.Room room: map.rooms) {												//rendering borders
 	         g.setColor(Color.BLACK); 
 	         g.drawRect(room.x, room.y, room.width, room.length);
 	         g.setColor(validCoordinateColor);
-	         g.drawLine(room.doorX1, room.doorY1, room.doorX2, room.doorY2);
-	         
-	         }
+	         g.drawLine(room.doorX1, room.doorY1, room.doorX2, room.doorY2); }
 		     
 	      }
-
-        public void fillCanvas()
-        {
-        	try {
-				Map.MapData mapData = MapStorage.loadSettings();
-				for (Tuple tuple :  mapData.getCoordinates())
-				{
-					System.out.println("loaded tuples : "+ tuple.X + "  ,  " + tuple.Y );
-					//canvas.setRGB(tuple.X, tuple.Y, Color.BLUE.getRGB());
-				}
-				
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        	
-        	
-        	
-        }
-        	
-        	
+		
         
 	 }
 
