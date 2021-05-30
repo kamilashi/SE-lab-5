@@ -1,13 +1,13 @@
 package lib;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.io.FileWriter;
 import java.io.IOException;
-import lib.Map.MapData;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
-import com.google.gson.*;;
+import com.google.gson.Gson;
+
+import lib.Map.MapData;;
 
 public abstract class MapStorage {
 	
@@ -49,7 +49,7 @@ public abstract class MapStorage {
 	}
 	
 	public static void resetMap() {
-		map.resetMapData();
+		currentMap.resetMapData();
 	}
 	
 }
