@@ -15,7 +15,7 @@ public class Map {
 		if(roomsCount<10)
 		{
 		Room room = new Room(x,y,w,l,dX1,dY1,dX2,dY2);
-		rooms[0] = room;
+		rooms[roomsCount] = room;
 		roomsCount++;
 		}
 	}
