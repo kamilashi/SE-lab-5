@@ -65,7 +65,7 @@ public class Main {
 			mainPanel.add(southPanel, BorderLayout.SOUTH);
 			
 			lib.MapStorage.saveSettings();
-			
+			//mapPainter.fillCanvas();
 			
 		
 	}

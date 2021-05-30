@@ -41,8 +41,8 @@ public class Map {
 			{
 				for ( j = room.y; j<(room.y+room.length); j++)
 				{
-					coordinates.put(new Tuple(i,i), true);
-					System.out.println("adding tuple " + i + " , " + j);
+					coordinates.put(new Tuple(i,j), true);
+					//System.out.println("adding tuple " + i + " , " + j);
 				}
 			}
 			
@@ -93,6 +93,10 @@ public class Map {
 		public ArrayList<Tuple> validCoordinates;
 		public MapData(ArrayList<Tuple> objects) {
 			validCoordinates = objects;
+		}
+		public ArrayList<Tuple> getCoordinates() {
+			return validCoordinates;
+			
 		}
 	}
 	
