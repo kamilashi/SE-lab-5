@@ -64,7 +64,7 @@ public class Main {
 			flowLayout.setVgap(70);
 			mainPanel.add(southPanel, BorderLayout.SOUTH);
 			
-			lib.MapStorage.saveMap();
+			lib.MapStorage.saveSettings();
 			
 			
 		
