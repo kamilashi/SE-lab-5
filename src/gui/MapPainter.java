@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -25,17 +26,15 @@ import lib.MapStorage;
 		
 		public MapPainter( )
 		{
+			//
 		}
 
 		@Override
 	      public void paintComponent(Graphics g) {
-		
-			 
 	         super.paintComponent(g);     // paint parent's background
 	         Color backgroundColor = new Color(240,240,240); 
 	         setBackground(backgroundColor);  // set background color for this JPanel
 	         Color validCoordinateColor = new Color(173, 216, 230);
-
 	        
 	         //Map map = MapStorage.getMap();
 	         Map.MapData mapData = MapStorage.getMap().getMapData();							//rendering valid coordinates
@@ -46,7 +45,6 @@ import lib.MapStorage;
 						g.setColor(validCoordinateColor);
 						g.drawLine(x,y,x,y);
 					}
-	         
 	         
 	         for (Map.Room room:  MapStorage.getMap().rooms) {												//rendering borders
 	         g.setColor(Color.BLACK); 

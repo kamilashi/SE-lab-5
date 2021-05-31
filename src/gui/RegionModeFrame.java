@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Cursor;
 
 public class RegionModeFrame extends JFrame{
 	
@@ -101,6 +102,7 @@ public class RegionModeFrame extends JFrame{
 			
 			
 			centerPanel.add(mapPainter);
+			mapPainter.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 			
 			JPanel panel = new JPanel();
 			FlowLayout flowLayout_2 = (FlowLayout) panel.getLayout();
