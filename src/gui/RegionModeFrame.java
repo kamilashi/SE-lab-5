@@ -16,6 +16,8 @@ import lib.MapStorage;
 import lib.Tuple;
 import javax.swing.JButton;
 import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class RegionModeFrame extends JFrame{
 	
@@ -31,6 +33,7 @@ public class RegionModeFrame extends JFrame{
 
 		ScreenSizeManager.fetchScreenInfo();
 		screenSize = ScreenSizeManager.getScreenDimension();
+		gui.MapPainter mapPainter = new gui.MapPainter();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
@@ -56,6 +59,18 @@ public class RegionModeFrame extends JFrame{
 			northPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 20));
 			
 			JButton loadButton = new JButton("Load");
+			loadButton.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					try {
+						MapStorage.loadSettings();
+						mapPainter.repaint();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			});
 			loadButton.setFont(new Font("Roboto", Font.PLAIN, 20));
 			northPanel.add(loadButton);
 			
@@ -71,7 +86,7 @@ public class RegionModeFrame extends JFrame{
 			
 			
 			
-			gui.MapPainter mapPainter = new gui.MapPainter();
+			
 			centerPanel.add(mapPainter);
 			
 			JPanel panel = new JPanel();
@@ -99,6 +114,13 @@ public class RegionModeFrame extends JFrame{
 			mainPanel.add(southPanel, BorderLayout.SOUTH);
 			
 			JButton resetButton = new JButton("Reset");
+			resetButton.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					MapStorage.resetMap();
+					mapPainter.repaint();
+				}
+			});
 			resetButton.setFont(new Font("Roboto", Font.PLAIN, 20));
 			southPanel.add(resetButton);
 			
