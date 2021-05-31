@@ -1,12 +1,14 @@
 package lib;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import com.google.gson.Gson;
 
-import lib.Map.MapData;;
+import lib.Map.MapData;
 
 public abstract class MapStorage {
 	
@@ -21,8 +23,21 @@ public abstract class MapStorage {
 	
 	public static void saveSettings() throws IOException
 	{
+		
+		String directory = Paths.get("maps").toAbsolutePath().toString();
+		File pathAsFile = new File(directory);
+		
+		if(!Files.exists(Paths.get(directory))){
+	        System.out.println(directory + "\" will be created.");
+	        pathAsFile.mkdir();
+	    }
+		
+		Path filePath = Paths.get("maps/map.json");
+		System.out.println("saving into " + filePath.toAbsolutePath());
+	
 		String jsonObject = new Gson().toJson(currentMap.getMapData());
-		FileWriter file = new FileWriter(Paths.get("src//maps//map.json").toString()); 
+		FileWriter file = new FileWriter(filePath.toAbsolutePath().toString()); 
+		
 			try {
 	            file.write(jsonObject);
 	            
@@ -42,9 +57,17 @@ public abstract class MapStorage {
 	
 	public static void loadSettings() throws IOException
 	{
-		String jsonObject = new String(Files.readAllBytes(Paths.get("src//maps//map.json")));
+		Path filePath = Paths.get("maps/map.json");
+		try {
+		System.out.println("loading from " + filePath.toAbsolutePath());
+		String jsonObject = new String(Files.readAllBytes(filePath.toAbsolutePath()));
 		MapData mapData = new Gson().fromJson(jsonObject, MapData.class);
 		currentMap.setMapData(mapData);
+		}
+		catch (Exception e)
+		{
+			System.out.println("no saved maps yet" + filePath.toAbsolutePath());
+		}
 	}
 	
 	public static void updateSettings(int x, int y)

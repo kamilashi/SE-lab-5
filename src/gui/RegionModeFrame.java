@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.TitlePaneLayout;
 
 import lib.MapStorage;
 import lib.Tuple;
@@ -110,9 +111,7 @@ public class RegionModeFrame extends JFrame{
 			centerPanel.setFont(new Font("Roboto", Font.PLAIN, 30));
 			mainPanel.add(centerPanel, BorderLayout.CENTER);
 			centerPanel.setLayout(new BorderLayout(0, 50));
-			
-			
-			
+		
 			
 			centerPanel.add(mapPainter);
 			mapPainter.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
@@ -121,9 +120,6 @@ public class RegionModeFrame extends JFrame{
 			FlowLayout flowLayout_2 = (FlowLayout) panel.getLayout();
 			flowLayout_2.setHgap(8);
 			centerPanel.add(panel, BorderLayout.WEST);
-			//lib.MapStorage.saveSettings();
-			
-			
 			
 			JPanel westPanel = new JPanel();
 			FlowLayout fl_westPanel = (FlowLayout) westPanel.getLayout();
@@ -158,34 +154,25 @@ public class RegionModeFrame extends JFrame{
 			southButtonPanel.add(resetButton);
 			
 			JButton OKbutton = new JButton("OK");
-			OKbutton.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mousePressed(MouseEvent e) {
-					//updateMap();
-					//mapPainter.repaint();
-					System.out.println("Map has been sent!");
-				}
-			});
 			OKbutton.setFont(new Font("Roboto", Font.PLAIN, 20));
 			southButtonPanel.add(OKbutton);
 			
 			
-			JLabel lblNewLabel = new JLabel("     Define regions            ");
-			lblNewLabel.setPreferredSize(new Dimension(105, 100));
-			lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
-			lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 30));
-			getContentPane().add(lblNewLabel, BorderLayout.NORTH);
+			JLabel pageTitleLabel = new JLabel("       Define region            ");
+			pageTitleLabel.setPreferredSize(new Dimension(105, 100));
+			pageTitleLabel.setHorizontalAlignment(SwingConstants.LEFT);
+			pageTitleLabel.setFont(new Font("Roboto Light", Font.PLAIN, 30));
+			getContentPane().add(pageTitleLabel, BorderLayout.NORTH);
 			
+
+			OKbutton.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+
+				pageTitleLabel.setText("       Map has been sent!");
+				}
+			});
 			
-			//MapStorage.loadSettings();
-			//mapPainter.printPoints();
-			
-			//mapPainter.updateMap();
-			
-			
-			
-			mapPainter.repaint();
-			repaint();
 		
 	}
 	
