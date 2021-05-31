@@ -62,7 +62,7 @@ public class Map {
 		}
 		
 		ArrayList<Tuple> coodrs
-        = coordinates.values().stream().collect(
+        = coordinates.values().stream().filter(x -> (x.X > 0)).collect(
             Collectors.toCollection(ArrayList::new));
 		MapData mapData = new MapData(coodrs);
 		

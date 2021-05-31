@@ -75,6 +75,19 @@ public class RegionModeFrame extends JFrame{
 			northPanel.add(loadButton);
 			
 			JButton saveButton = new JButton("Save");
+			saveButton.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					try {
+						MapStorage.saveSettings();
+						//mapPainter.repaint();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+				}
+			});
 			saveButton.setFont(new Font("Roboto", Font.PLAIN, 20));
 			northPanel.add(saveButton);
 			
