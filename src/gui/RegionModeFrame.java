@@ -19,6 +19,7 @@ import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Cursor;
+import java.awt.GridLayout;
 
 public class RegionModeFrame extends JFrame{
 	
@@ -35,6 +36,13 @@ public class RegionModeFrame extends JFrame{
 		ScreenSizeManager.fetchScreenInfo();
 		screenSize = ScreenSizeManager.getScreenDimension();
 		gui.MapPainter mapPainter = new gui.MapPainter();
+		mapPainter.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				clipMap(e.getX(), e.getY(),20);
+				mapPainter.repaint();
+			}
+		});
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
@@ -72,8 +80,13 @@ public class RegionModeFrame extends JFrame{
 					}
 				}
 			});
+			
+			JPanel northButtonPanel = new JPanel();
+			northPanel.add(northButtonPanel);
+			northButtonPanel.setLayout(new GridLayout(1, 0, 0, 0));
+			
 			loadButton.setFont(new Font("Roboto", Font.PLAIN, 20));
-			northPanel.add(loadButton);
+			northButtonPanel.add(loadButton);
 			
 			JButton saveButton = new JButton("Save");
 			saveButton.addMouseListener(new MouseAdapter() {
@@ -90,7 +103,7 @@ public class RegionModeFrame extends JFrame{
 				}
 			});
 			saveButton.setFont(new Font("Roboto", Font.PLAIN, 20));
-			northPanel.add(saveButton);
+			northButtonPanel.add(saveButton);
 			
 			JPanel centerPanel = new JPanel();
 			centerPanel.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -128,6 +141,10 @@ public class RegionModeFrame extends JFrame{
 			flowLayout.setVgap(70);
 			mainPanel.add(southPanel, BorderLayout.SOUTH);
 			
+
+			JPanel southButtonPanel = new JPanel();
+			southPanel.add(southButtonPanel);
+			
 			JButton resetButton = new JButton("Reset");
 			resetButton.addMouseListener(new MouseAdapter() {
 				@Override
@@ -136,19 +153,22 @@ public class RegionModeFrame extends JFrame{
 					mapPainter.repaint();
 				}
 			});
+			southButtonPanel.setLayout(new GridLayout(0, 2, 0, 0));
 			resetButton.setFont(new Font("Roboto", Font.PLAIN, 20));
-			southPanel.add(resetButton);
+			southButtonPanel.add(resetButton);
 			
 			JButton OKbutton = new JButton("OK");
 			OKbutton.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
-					updateMap();
-					mapPainter.repaint();
+					//updateMap();
+					//mapPainter.repaint();
+					System.out.println("Map has been sent!");
 				}
 			});
 			OKbutton.setFont(new Font("Roboto", Font.PLAIN, 20));
-			southPanel.add(OKbutton);
+			southButtonPanel.add(OKbutton);
+			
 			
 			JLabel lblNewLabel = new JLabel("     Define regions            ");
 			lblNewLabel.setPreferredSize(new Dimension(105, 100));
@@ -156,8 +176,6 @@ public class RegionModeFrame extends JFrame{
 			lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 30));
 			getContentPane().add(lblNewLabel, BorderLayout.NORTH);
 			
-			MapStorage.getMap().printActivePoints();
-
 			
 			//MapStorage.loadSettings();
 			//mapPainter.printPoints();
@@ -171,12 +189,13 @@ public class RegionModeFrame extends JFrame{
 		
 	}
 	
-			public void updateMap()
+			public void clipMap(int x, int y, int brushSize)
 			{
 				int i; int j;
-				for(i=0;i<100;i++)
+				int halfSize = (brushSize/2);
+				for(i=(x-halfSize);i<(x+halfSize);i++)
 				{
-					for (j=0;j<10;j++)
+					for (j=(y-halfSize);j<(y+halfSize);j++)
 					{MapStorage.updateSettings(i, j);
 					}
 				}

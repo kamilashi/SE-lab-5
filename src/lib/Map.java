@@ -130,7 +130,7 @@ public class Map {
 			coordinates.put(tuple.toString(), tuple);
 		}
 		
-		System.out.println("Setting loaded coords");
+		System.out.println("Setting loaded coordinates");
 		
 	}
 
@@ -140,12 +140,12 @@ public class Map {
 		
 		try {
 		Tuple value = coordinates.get(tuple.toString());
-		System.out.println("trying to delete point " + value.toString() );
+		//System.out.println("trying to delete point " + value.toString() );
 
 		coordinates.put(tuple.toString(), new Tuple(-1,-1));
 		}catch (Exception e)
 		{
-			System.out.println("no match for the key");
+			//System.out.println("no match for the key");
 		}
 		
 	}
