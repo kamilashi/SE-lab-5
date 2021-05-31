@@ -125,6 +125,13 @@ public class RegionModeFrame extends JFrame{
 			southPanel.add(resetButton);
 			
 			JButton OKbutton = new JButton("OK");
+			OKbutton.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					updateMap();
+					mapPainter.repaint();
+				}
+			});
 			OKbutton.setFont(new Font("Roboto", Font.PLAIN, 20));
 			southPanel.add(OKbutton);
 			
@@ -151,16 +158,12 @@ public class RegionModeFrame extends JFrame{
 	
 			public void updateMap()
 			{
-
-				ArrayList<Tuple> excluded = new ArrayList<Tuple>();
 				int i; int j;
 				for(i=0;i<100;i++)
 				{
-					for (j=0;j<100;j++)
-					{
-						excluded.add(new Tuple(i,j));
+					for (j=0;j<10;j++)
+					{MapStorage.updateSettings(i, j);
 					}
 				}
-				MapStorage.getMap().updateMapData(excluded);
 			}
 }

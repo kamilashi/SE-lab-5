@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 import com.google.gson.Gson;
 
@@ -41,12 +42,16 @@ public abstract class MapStorage {
 	        }
 	}
 	
-	public static MapData loadSettings() throws IOException
+	public static void loadSettings() throws IOException
 	{
 		String jsonObject = new String(Files.readAllBytes(Paths.get("src//maps//map.json")));
 		MapData mapData = new Gson().fromJson(jsonObject, MapData.class);
 		currentMap.setMapData(mapData);
-		return mapData;
+	}
+	
+	public static void updateSettings(int x, int y)
+	{
+		currentMap.deletePoint(x,y);
 	}
 	
 	public static void resetMap() {

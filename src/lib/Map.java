@@ -138,18 +138,15 @@ public class Map {
 		Tuple tuple = new Tuple(i,j);
 		
 		
+		try {
 		Tuple value = coordinates.get(tuple.toString());
 		System.out.println("trying to delete point " + value.toString() );
 
-		Iterator<String> iterator = coordinates.keySet().iterator();
-		while(iterator.hasNext())
+		coordinates.put(tuple.toString(), new Tuple(-1,-1));
+		}catch (Exception e)
 		{
-			if(iterator.next() == tuple.toString()){
-		        iterator.remove();
-		        System.out.println("deleted tuple at "+ i + " , " + j);
-		      }
+			System.out.println("no match for the key");
 		}
-		
 		
 	}
 	
