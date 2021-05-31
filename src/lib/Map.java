@@ -8,7 +8,8 @@ import java.util.stream.Collectors;
 
 public class Map {
 	public int roomsCount;
-	public HashMap<String ,Tuple> coordinates;
+	public static HashMap<String ,Tuple> coordinates;
+	public HashMap<String ,Integer[]> coord;
 	public ArrayList<Room> rooms;
 	private int lastIndex = 0;
 	
@@ -16,7 +17,11 @@ public class Map {
 	{
 		this.roomsCount = 0;
 		rooms = new ArrayList<>();				//current room limit = 10
+		if(coordinates==null)
+		{
 		coordinates = new HashMap<>();
+		}
+		coord = new HashMap<>();
 		
 	}
 	
@@ -42,6 +47,7 @@ public class Map {
 				{
 					Tuple tuple = new Tuple(i,j);
 					coordinates.put(tuple.toString(),tuple);
+					//System.out.println("key " + tuple.toString().toString() + " value " + coordinates.get(tuple.toString()).toString());
 				}
 			}
 		}
@@ -60,8 +66,6 @@ public class Map {
             Collectors.toCollection(ArrayList::new));
 		MapData mapData = new MapData(coodrs);
 		
-		
-		
 		return mapData;
 	}
 	
@@ -76,7 +80,7 @@ public class Map {
 		else
 		{
 			for (Tuple tuple: tuples)
-			{coordinates.remove(tuple.toString());}
+			{coordinates.put(tuple.toString(),new Tuple(-1,-1));}
 		}
 	}
 	
@@ -118,7 +122,8 @@ public class Map {
 
 	public void setMapData(MapData mapData) {
 		ArrayList<Tuple> tuples = mapData.getCoordinates();
-		coordinates.clear();
+		coordinates = null;
+		coordinates = new HashMap<>();
 		
 		for (Tuple tuple : tuples)
 		{
@@ -151,9 +156,9 @@ public class Map {
 	public void printActivePoints()
 	{
 		System.out.println("print attempt ");
-		for(Entry<String, Tuple> entry: coordinates.entrySet())
+		for(Tuple tuple: coordinates.values())
 		{
-			System.out.println("Tuple: " + entry.getValue().X + " , " + entry.getValue().Y);
+			 System.out.println("value: " + tuple.toString());
 		}
 	}
 

@@ -11,7 +11,7 @@ import lib.Map.MapData;;
 
 public abstract class MapStorage {
 	
-	private static Map currentMap;
+	private static Map currentMap = new Map();
 	
 	public static Map getMap()
 	{return currentMap;	}
@@ -54,7 +54,7 @@ public abstract class MapStorage {
 	}
 	public static void printMap()
 	{
-		//currentMap.printActivePoints();
+		currentMap.printActivePoints();
 	}
 	
 }

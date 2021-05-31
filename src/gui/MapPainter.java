@@ -25,7 +25,6 @@ import lib.MapStorage;
 		
 		public MapPainter( )
 		{
-			
 		}
 
 		@Override
