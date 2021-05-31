@@ -12,7 +12,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import lib.Map;
-import lib.Map.Tuple;
+import lib.Tuple;
 import lib.MapStorage;
 
 	 public class MapPainter extends JPanel {
@@ -22,7 +22,6 @@ import lib.MapStorage;
 		 */
 		private static final long serialVersionUID = 6890456050991712169L;
 		
-		private BufferedImage canvas;
 		
 		public MapPainter( )
 		{
@@ -31,14 +30,16 @@ import lib.MapStorage;
 
 		@Override
 	      public void paintComponent(Graphics g) {
-	    	  
+		
+			 
 	         super.paintComponent(g);     // paint parent's background
 	         Color backgroundColor = new Color(240,240,240); 
 	         setBackground(backgroundColor);  // set background color for this JPanel
 	         Color validCoordinateColor = new Color(173, 216, 230);
-	         
-	         Map map = MapStorage.getMap();
-	         Map.MapData mapData = map.getMapData();							//rendering valid coordinates
+
+	        
+	         //Map map = MapStorage.getMap();
+	         Map.MapData mapData = MapStorage.getMap().getMapData();							//rendering valid coordinates
 					for (Tuple tuple :  mapData.getCoordinates())
 					{
 						int x = tuple.X;
@@ -48,7 +49,7 @@ import lib.MapStorage;
 					}
 	         
 	         
-	         for (Map.Room room: map.rooms) {												//rendering borders
+	         for (Map.Room room:  MapStorage.getMap().rooms) {												//rendering borders
 	         g.setColor(Color.BLACK); 
 	         g.drawRect(room.x, room.y, room.width, room.length);
 	         g.setColor(validCoordinateColor);
@@ -56,7 +57,6 @@ import lib.MapStorage;
 		     
 	      }
 		
-        
 	 }
 
 

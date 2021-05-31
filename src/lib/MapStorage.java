@@ -52,5 +52,9 @@ public abstract class MapStorage {
 	public static void resetMap() {
 		currentMap.resetMapData();
 	}
+	public static void printMap()
+	{
+		//currentMap.printActivePoints();
+	}
 	
 }

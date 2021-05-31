@@ -1,23 +1,22 @@
 package lib;
 
-import java.lang.reflect.Array;
-import java.security.KeyPair;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class Map {
 	public int roomsCount;
-	public HashMap< Tuple, Boolean > coordinates;
+	public HashMap<String ,Tuple> coordinates;
 	public ArrayList<Room> rooms;
 	private int lastIndex = 0;
 	
 	public Map()
 	{
 		this.roomsCount = 0;
-		rooms = new ArrayList<Room>();				//current room limit = 10
-		coordinates = new HashMap< Tuple, Boolean>();
+		rooms = new ArrayList<>();				//current room limit = 10
+		coordinates = new HashMap<>();
 		
 	}
 	
@@ -41,10 +40,12 @@ public class Map {
 			{
 				for ( j = room.y; j<(room.y+room.length); j++)
 				{
-					coordinates.put(new Tuple(i,j), true);
+					Tuple tuple = new Tuple(i,j);
+					coordinates.put(tuple.toString(),tuple);
 				}
 			}
 		}
+		
 		
 	}
 	public MapData getMapData()
@@ -55,14 +56,18 @@ public class Map {
 		}
 		
 		ArrayList<Tuple> coodrs
-        = coordinates.keySet().stream().collect(
+        = coordinates.values().stream().collect(
             Collectors.toCollection(ArrayList::new));
 		MapData mapData = new MapData(coodrs);
+		
+		
+		
 		return mapData;
 	}
 	
 	
 	public void updateMapData(ArrayList<Tuple> tuples) {
+		
 
 		if(coordinates.isEmpty())
 		{
@@ -71,7 +76,7 @@ public class Map {
 		else
 		{
 			for (Tuple tuple: tuples)
-			{coordinates.remove(tuple);}
+			{coordinates.remove(tuple.toString());}
 		}
 	}
 	
@@ -110,27 +115,46 @@ public class Map {
 			
 		}
 	}
-	
-	public class Tuple{
-		public int X;
-		public int Y;
-		public Tuple(int x, int y) {
-			this.X = x;
-			this.Y = y;
-		}
-		
-	}
 
 	public void setMapData(MapData mapData) {
 		ArrayList<Tuple> tuples = mapData.getCoordinates();
+		coordinates.clear();
 		
 		for (Tuple tuple : tuples)
 		{
-			coordinates.put(tuple, true);
+			coordinates.put(tuple.toString(), tuple);
 		}
 		
 		System.out.println("Setting loaded coords");
 		
+	}
+
+	public void deletePoint(int i, int j) {
+		Tuple tuple = new Tuple(i,j);
+		
+		
+		Tuple value = coordinates.get(tuple.toString());
+		System.out.println("trying to delete point " + value.toString() );
+
+		Iterator<String> iterator = coordinates.keySet().iterator();
+		while(iterator.hasNext())
+		{
+			if(iterator.next() == tuple.toString()){
+		        iterator.remove();
+		        System.out.println("deleted tuple at "+ i + " , " + j);
+		      }
+		}
+		
+		
+	}
+	
+	public void printActivePoints()
+	{
+		System.out.println("print attempt ");
+		for(Entry<String, Tuple> entry: coordinates.entrySet())
+		{
+			System.out.println("Tuple: " + entry.getValue().X + " , " + entry.getValue().Y);
+		}
 	}
 
 }

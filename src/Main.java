@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 import javax.swing.SwingConstants;
 
-import lib.Map.Tuple;
 import lib.MapStorage;
 
 import java.awt.Dimension;
@@ -27,7 +26,7 @@ public class Main {
 		  gui.RegionModeFrame regionModeFrame = new gui.RegionModeFrame();
 		  lib.MapGenerator generator = new lib.MapGenerator();
 
-			
+		  //MapStorage.printMap();
 			
 			
 		  
@@ -49,8 +48,6 @@ public class Main {
 			mainPanel.add(centerPanel, BorderLayout.CENTER);
 			centerPanel.setLayout(new BorderLayout(0, 0));
 			
-
-
 			
 			
 			gui.MapPainter mapPainter = new gui.MapPainter();
@@ -74,18 +71,18 @@ public class Main {
 			flowLayout.setVgap(70);
 			mainPanel.add(southPanel, BorderLayout.SOUTH);
 			
-			
+			//MapStorage.getMap().printActivePoints();
 
-			ArrayList<lib.Map.Tuple> excluded = new ArrayList<lib.Map.Tuple>();
+			//ArrayList<lib.Tuple> excluded = new ArrayList<lib.Tuple>();
 			
-			for(int i=0;i<50;i++) {
-				for(int j=0;j<50;j++) {
-					excluded.add(MapStorage.getMap().new Tuple(i,j));
-				}
-			}
-			MapStorage.getMap().updateMapData(excluded);
 			
-			MapStorage.loadSettings();
+			
+			//MapStorage.loadSettings();
+			//mapPainter.printPoints();
+			
+			//mapPainter.updateMap();
+			
+			
 			
 			mapPainter.repaint();
 			regionModeFrame.repaint();
