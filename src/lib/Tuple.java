@@ -1,7 +1,5 @@
 package lib;
 
-import java.util.Arrays;
-
 public class Tuple{
 	public Integer X;
 	public Integer Y;

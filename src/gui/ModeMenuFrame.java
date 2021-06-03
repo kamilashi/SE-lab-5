@@ -10,7 +10,9 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Rectangle;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 public class ModeMenuFrame extends JFrame {
 
@@ -30,7 +32,6 @@ public class ModeMenuFrame extends JFrame {
 		setSize(new Dimension(418, 679));
 		setBounds(ScreenSizeManager.getScreenBounds());
 		setPreferredSize(screenSize);
-		setName("this");
 		setVisible(true);
 		setEnabled(true);
 		
@@ -57,10 +58,32 @@ public class ModeMenuFrame extends JFrame {
 		centerPanel.add(autoModeButton);
 		
 		JButton regionModeButton = new JButton("Region");
+		regionModeButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				try {
+					gui.ModeFrame regionModeFrame = new gui.ModeFrame("Region");
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		regionModeButton.setFont(new Font("Roboto", Font.PLAIN, 30));
 		centerPanel.add(regionModeButton);
 		
 		JButton roomModeButton = new JButton("Room");
+		roomModeButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				try {
+					gui.ModeFrame roomModeFrame = new gui.ModeFrame("Room");
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		roomModeButton.setFont(new Font("Roboto", Font.PLAIN, 30));
 		centerPanel.add(roomModeButton);
 	}

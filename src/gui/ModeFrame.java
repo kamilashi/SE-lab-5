@@ -5,24 +5,20 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.TitlePaneLayout;
-
-import lib.MapStorage;
-import lib.Tuple;
+import lib.MapManager;
 import javax.swing.JButton;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Cursor;
 import java.awt.GridLayout;
+import java.awt.Rectangle;
 
-public class RegionModeFrame extends JFrame{
+public class ModeFrame extends JFrame{
 	
 	/**
 	 * 
@@ -30,17 +26,36 @@ public class RegionModeFrame extends JFrame{
 	private static final long serialVersionUID = -7520363334341273313L;
 	
 	Dimension screenSize;
+	String chosenMode;
 
-	public RegionModeFrame() throws IOException
+	public ModeFrame(String mode) throws IOException
 	{
-
+		chosenMode = mode;
 		ScreenSizeManager.fetchScreenInfo();
 		screenSize = ScreenSizeManager.getScreenDimension();
-		gui.MapPainter mapPainter = new gui.MapPainter();
+		gui.MapPainter mapPainter;
+		if(chosenMode=="Room")
+		{
+			mapPainter =  new gui.MapPainter(true);
+		}
+		else {
+			mapPainter =  new gui.MapPainter(false);
+		}
+		
+		
 		mapPainter.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				clipMap(e.getX(), e.getY(),20);
+				
+				if(chosenMode=="Region")
+				{
+					//clipRegion(e.getX(), e.getY(),20);
+					MapManager.updateRegionSettings(e.getX(), e.getY(),20);
+				}
+				else if(chosenMode == "Room")
+				{
+					MapManager.updateRoomSettings(e.getX(), e.getY());
+				}
 				mapPainter.repaint();
 			}
 		});
@@ -73,7 +88,7 @@ public class RegionModeFrame extends JFrame{
 				@Override
 				public void mousePressed(MouseEvent e) {
 					try {
-						MapStorage.loadSettings();
+						MapManager.loadSettings();
 						mapPainter.repaint();
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
@@ -94,7 +109,7 @@ public class RegionModeFrame extends JFrame{
 				@Override
 				public void mousePressed(MouseEvent e) {
 					try {
-						MapStorage.saveSettings();
+						MapManager.saveSettings();
 						//mapPainter.repaint();
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
@@ -145,7 +160,7 @@ public class RegionModeFrame extends JFrame{
 			resetButton.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
-					MapStorage.resetMap();
+					MapManager.resetMap();
 					mapPainter.repaint();
 				}
 			});
@@ -158,7 +173,7 @@ public class RegionModeFrame extends JFrame{
 			southButtonPanel.add(OKbutton);
 			
 			
-			JLabel pageTitleLabel = new JLabel("       Define region            ");
+			JLabel pageTitleLabel = new JLabel("       Define " + chosenMode + "            ");
 			pageTitleLabel.setPreferredSize(new Dimension(105, 100));
 			pageTitleLabel.setHorizontalAlignment(SwingConstants.LEFT);
 			pageTitleLabel.setFont(new Font("Roboto Light", Font.PLAIN, 30));
@@ -176,14 +191,26 @@ public class RegionModeFrame extends JFrame{
 		
 	}
 	
-			public void clipMap(int x, int y, int brushSize)
+			protected void clipRoom(int x, int y) {
+				try {
+					//Rectangle roomRectangle = MapManager.getRoomRectangle(x,y);
+					
+				}
+				catch(Exception e)
+				{
+					
+				}
+				
+	}
+
+			public void clipRegion(int x, int y, int brushSize)
 			{
 				int i; int j;
 				int halfSize = (brushSize/2);
 				for(i=(x-halfSize);i<(x+halfSize);i++)
 				{
 					for (j=(y-halfSize);j<(y+halfSize);j++)
-					{MapStorage.updateSettings(i, j);
+					{//MapManager.updateSettings(i, j);
 					}
 				}
 			}

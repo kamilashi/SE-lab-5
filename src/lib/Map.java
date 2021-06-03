@@ -2,8 +2,6 @@ package lib;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class Map {
@@ -11,7 +9,6 @@ public class Map {
 	public static HashMap<String ,Tuple> coordinates;
 	public HashMap<String ,Integer[]> coord;
 	public ArrayList<Room> rooms;
-	private int lastIndex = 0;
 	
 	public Map()
 	{
@@ -30,10 +27,32 @@ public class Map {
 		if(roomsCount<10)
 		{
 		Room room = new Room(x,y,w,l,dX1,dY1,dX2,dY2);
+		room.roomIndex = roomsCount;
 		rooms.add(room);
 		roomsCount++;
 		
 		}
+	}
+	public Room getRoom(int index)
+	{
+		for(Room room : rooms) {
+			if(room.roomIndex == index)
+			{
+				return room;
+			}
+		}
+		return null;
+	}
+	
+	public Room getRoom(int x, int y)
+	{
+		for(Room room : rooms) {
+			if((x>room.x && x<(room.x+room.width)) && (y>room.y && y<(room.y+room.length)))
+			{
+				return room;
+			}
+		}
+		return null;
 	}
 	
 	public void resetMapData() 
@@ -106,6 +125,20 @@ public class Map {
 			this.doorX2 = dX2;
 			this.doorY2 = dY2;
 		}
+
+		public boolean isDoor(int x0, int y0) {
+			float left = (y0 - doorY1);
+			float right = (x0 - doorX1)*( ((float) (doorY2-doorY1))/((float) (doorX2-doorX1)));
+			
+			System.out.println(left +" ? " + right);
+			
+			if((y0 - doorY1) == (x0 - doorX1)*( ((float) (doorY2-doorY1))/((float) (doorX2-doorX1))))
+			{
+				
+				return true;
+			}
+			return false;
+		}
 	}
 	
 	public class MapData
@@ -139,7 +172,7 @@ public class Map {
 		
 		
 		try {
-		Tuple value = coordinates.get(tuple.toString());
+		//Tuple value = coordinates.get(tuple.toString());
 		//System.out.println("trying to delete point " + value.toString() );
 
 		coordinates.put(tuple.toString(), new Tuple(-1,-1));
