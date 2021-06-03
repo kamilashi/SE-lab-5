@@ -27,6 +27,13 @@ import lib.MapManager;
 	         Color backgroundColor = new Color(240,240,240); 
 	         setBackground(backgroundColor);  // set background color for this JPanel
 	         Color validCoordinateColor = new Color(173, 216, 230);
+	         
+	         for (Map.Room room:  MapManager.getMap().rooms) {												//rendering borders
+		         g.setColor(Color.BLACK); 
+		         g.drawRect(room.x, room.y, room.width, room.length);
+		         g.setColor(backgroundColor);
+		         g.drawLine(room.doorX1, room.doorY1, room.doorX2, room.doorY2); 
+		         }
 	        
 	         //Map map = MapStorage.getMap();
 	         Map.MapData mapData = MapManager.getMap().getMapData();							//rendering valid coordinates
@@ -38,12 +45,7 @@ import lib.MapManager;
 						g.drawLine(x,y,x,y);
 					}
 	         
-	         for (Map.Room room:  MapManager.getMap().rooms) {												//rendering borders
-	         g.setColor(Color.BLACK); 
-	        
-	         g.drawRect(room.x, room.y, room.width, room.length);
-	         g.setColor(validCoordinateColor);
-	         g.drawLine(room.doorX1, room.doorY1, room.doorX2, room.doorY2); 
+	         for (Map.Room room:  MapManager.getMap().rooms) {					//rendering indexes
 	         g.setColor(Color.BLACK); 
 	         if(drawRoomIndexes)
 	         	{

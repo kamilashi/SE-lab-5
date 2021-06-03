@@ -16,6 +16,7 @@ public class Map {
 		rooms = new ArrayList<>();				//current room limit = 10
 		if(coordinates==null)
 		{
+		
 		coordinates = new HashMap<>();
 		}
 		coord = new HashMap<>();
@@ -26,6 +27,7 @@ public class Map {
 	{
 		if(roomsCount<10)
 		{
+		
 		Room room = new Room(x,y,w,l,dX1,dY1,dX2,dY2);
 		room.roomIndex = roomsCount;
 		rooms.add(room);
@@ -54,19 +56,48 @@ public class Map {
 		}
 		return null;
 	}
+	public Tuple lerp(int x1, int y1, int x2, int y2, float t)
+	{
+		//System.out.println("			lerping between "+ x1 + ","+ y1 + " and " + x2 + "," + y2 );
+		int newX = Math.round( ((float)x1) *(1-t)) + Math.round(((float)x2)*t);
+		int newY = Math.round( ((float)y1)*(1-t)) + Math.round(((float)y2)*t);
+		return new Tuple(newX,newY);
+	}
 	
 	public void resetMapData() 
 	{
 		for(Room room : rooms)
 		{
 			int i,j;
-			for ( i = room.x; i<(room.x+room.width); i++)
+			for ( i = room.x+1; i<(room.x+room.width); i++)
 			{
-				for ( j = room.y; j<(room.y+room.length); j++)
+				for ( j = room.y+1; j<(room.y+room.length); j++)
 				{
 					Tuple tuple = new Tuple(i,j);
 					coordinates.put(tuple.toString(),tuple);
 					//System.out.println("key " + tuple.toString().toString() + " value " + coordinates.get(tuple.toString()).toString());
+				}
+			}
+
+			Tuple tuple = new Tuple(room.doorX1,room.doorY1 );
+			//System.out.println(tuple.toString() + "  new door ");
+			
+			if(tuple.X >= 0)			//if there is a valid door
+			{
+				
+			float length = (float) Math.sqrt((room.doorY2-room.doorY1)*(room.doorY2-room.doorY1) + (room.doorX2-room.doorX1)*(room.doorX2-room.doorX1));
+			//System.out.println("initial length: " + length);
+			
+			float cumulative = (float) 0.01;
+			
+			
+				while ((tuple.X < room.doorX2)||(tuple.Y < room.doorY2))
+				{
+					tuple = lerp(room.doorX1,room.doorY1,room.doorX2,room.doorY2,cumulative);
+					System.out.println("lerp "+ tuple.toString() + "   at " + cumulative + " %");
+					coordinates.put(tuple.toString(),tuple);
+					cumulative+=0.005;
+				
 				}
 			}
 		}
