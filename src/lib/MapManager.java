@@ -14,7 +14,7 @@ import lib.Map.Room;
 
 public abstract class MapManager {
 
-	private static Map currentMap = new Map();
+	private static Map currentMap;
 
 	public static Map getMap() {
 		return currentMap;

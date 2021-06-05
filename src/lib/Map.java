@@ -7,22 +7,40 @@ import java.util.stream.Collectors;
 public class Map {
 	public int roomsCount;
 	public static HashMap<String ,Tuple> coordinates;
-	public HashMap<String ,Integer[]> coord;
 	public ArrayList<Room> rooms;
+	private static boolean instanceCreated = false;
 	
-	public Map()
+	private Map()
 	{
 		this.roomsCount = 0;
 		rooms = new ArrayList<>();				//current room limit = 10
 		if(coordinates==null)
 		{
-		
 		coordinates = new HashMap<>();
 		}
-		coord = new HashMap<>();
-		
 	}
 	
+	/**
+	 *  Returns an instance of the class Map the first time it's called.
+	 *  for every subsequent time returns null
+	 */
+	public static Map getInstance()
+	{
+		if(!instanceCreated)
+		{
+		Map mapInstance = new Map();
+		instanceCreated = true;
+		return mapInstance;
+		}
+		return null;
+	}
+	
+	/**
+	 *  Add a room to map. The number of rooms can be unlimited, as long as it fits inside the mapPainter
+	 *  @param x,y room coordinates
+	 *  @param w,l room width and length (height in java.swing terms)
+	 *  @param dX1,dY1, dX2, dY2 start and end coordinates of a door (for now only one door per room is supported)  
+	 */
 	public void addRoom(int x, int y, int w, int l, int dX1, int dY1, int dX2, int dY2) 
 	{
 		if(roomsCount<10)
@@ -35,6 +53,11 @@ public class Map {
 		
 		}
 	}
+	
+	/**
+	 *  Get a room by index
+	 *  if the Room mode has been chosen.
+	 */
 	public Room getRoom(int index)
 	{
 		for(Room room : rooms) {
@@ -46,6 +69,10 @@ public class Map {
 		return null;
 	}
 	
+	/**
+	 *  Get a room which contains the point (x,y)
+	 *  @param x, y coordinates that are tested
+	 */
 	public Room getRoom(int x, int y)
 	{
 		for(Room room : rooms) {
@@ -56,6 +83,12 @@ public class Map {
 		}
 		return null;
 	}
+	
+	/**
+	 *  Constructor of class MapPainter.
+	 *  @param drawRoomIndexes boolean flag that indicates whether the room indexes should be printed. Is set to true 
+	 *  if the Room mode has been chosen.
+	 */
 	public Tuple lerp(int x1, int y1, int x2, int y2, float t)
 	{
 		//System.out.println("			lerping between "+ x1 + ","+ y1 + " and " + x2 + "," + y2 );
@@ -64,6 +97,12 @@ public class Map {
 		return new Tuple(newX,newY);
 	}
 	
+	/**
+	 *  Creates a hashmap that stores all the valid coordinates of where the robot is allowed to go. By default it's 
+	 *  all the points within the rooms + doorways. The coordinates are stored in the app in a form of a hashmap, 
+	 *  where the value is the tuple itself (X and y) and the key is it's string representation, whereas the data 
+	 *  exported to be used by the robot is of type MapData which only contains an array of tuples.
+	 */
 	public void resetMapData() 
 	{
 		for(Room room : rooms)
@@ -84,13 +123,9 @@ public class Map {
 			
 			if(tuple.X >= 0)			//if there is a valid door
 			{
-				
-			float length = (float) Math.sqrt((room.doorY2-room.doorY1)*(room.doorY2-room.doorY1) + (room.doorX2-room.doorX1)*(room.doorX2-room.doorX1));
-			//System.out.println("initial length: " + length);
-			
+			//float length = (float) Math.sqrt((room.doorY2-room.doorY1)*(room.doorY2-room.doorY1) + (room.doorX2-room.doorX1)*(room.doorX2-room.doorX1));
+
 			float cumulative = (float) 0.01;
-			
-			
 				while ((tuple.X < room.doorX2)||(tuple.Y < room.doorY2))
 				{
 					tuple = lerp(room.doorX1,room.doorY1,room.doorX2,room.doorY2,cumulative);
@@ -101,9 +136,12 @@ public class Map {
 				}
 			}
 		}
-		
-		
 	}
+	
+	/**
+	 *  returns map data to be exported, and creates a new instance if no such exists at a time of function call.
+	 *  Also cleans the coordinates in the process by deleting negative entries.
+	 */
 	public MapData getMapData()
 	{
 		if(coordinates.isEmpty())
@@ -119,7 +157,10 @@ public class Map {
 		return mapData;
 	}
 	
-	
+	/**
+	 *  Deletes valid coordinates, not by removing them from the hashmao, but by rewriting the corresponding entry with negative numbers
+	 *  that will be deleted later when exporting the coordinates inside the getMapData() function.
+	 */
 	public void updateMapData(ArrayList<Tuple> tuples) {
 		
 
@@ -156,20 +197,6 @@ public class Map {
 			this.doorX2 = dX2;
 			this.doorY2 = dY2;
 		}
-
-		public boolean isDoor(int x0, int y0) {
-			float left = (y0 - doorY1);
-			float right = (x0 - doorX1)*( ((float) (doorY2-doorY1))/((float) (doorX2-doorX1)));
-			
-			System.out.println(left +" ? " + right);
-			
-			if((y0 - doorY1) == (x0 - doorX1)*( ((float) (doorY2-doorY1))/((float) (doorX2-doorX1))))
-			{
-				
-				return true;
-			}
-			return false;
-		}
 	}
 	
 	public class MapData
@@ -180,7 +207,6 @@ public class Map {
 		}
 		public ArrayList<Tuple> getCoordinates() {
 			return validCoordinates;
-			
 		}
 	}
 
@@ -195,23 +221,18 @@ public class Map {
 		}
 		
 		System.out.println("Setting loaded coordinates");
-		
 	}
 
 	public void deletePoint(int i, int j) {
 		Tuple tuple = new Tuple(i,j);
-		
-		
 		try {
 		//Tuple value = coordinates.get(tuple.toString());
 		//System.out.println("trying to delete point " + value.toString() );
-
 		coordinates.put(tuple.toString(), new Tuple(-1,-1));
 		}catch (Exception e)
 		{
 			//System.out.println("no match for the key");
 		}
-		
 	}
 	
 	public void printActivePoints()
@@ -222,5 +243,4 @@ public class Map {
 			 System.out.println("value: " + tuple.toString());
 		}
 	}
-
 }

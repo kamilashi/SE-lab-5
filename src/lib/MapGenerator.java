@@ -7,7 +7,7 @@ public class MapGenerator {
 	public MapGenerator() throws IOException
 	
 	{
-		Map map = new Map();
+		Map map = Map.getInstance();
 
 		map.addRoom(0, 140, (140+140), 70, -100, -100, -100, -100);
 		map.addRoom(0, 0, 140, 140, 70, 140, 110, 140);

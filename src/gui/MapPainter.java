@@ -10,12 +10,17 @@ import lib.MapManager;
 
 	 public class MapPainter extends JPanel {
 		 
-	      /**
-		 * 
+	     /**
+		 *  Class that is used to paint the map
 		 */
 		private static final long serialVersionUID = 6890456050991712169L;
 		private boolean drawRoomIndexes;
 		
+		/**
+		 *  Constructor of class MapPainter.
+		 *  @param drawRoomIndexes boolean flag that indicates whether the room indexes should be printed. Is set to true 
+		 *  if the Room mode has been chosen.
+		 */
 		public MapPainter(boolean drawRoomIndexes )
 		{
 			this.drawRoomIndexes = drawRoomIndexes;
