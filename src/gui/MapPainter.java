@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import program.Map;
 import program.MapManager;
 
-	 public class MapPainter extends JPanel {
+	 public class MapPainter extends JPanel implements Runnable{
 		 
 	     /**
 		 *  Class that is used to paint the map
@@ -34,7 +34,6 @@ import program.MapManager;
 	         
 	         try {
 
-					int o = 1+1;
 	         for (Map.Room room:  MapManager.getMap().rooms) {												//rendering borders
 		         g.setColor(Color.BLACK); 
 		         g.drawRect(room.x, room.y, room.width, room.length);
@@ -64,6 +63,24 @@ import program.MapManager;
 			System.out.println("nothing to pring yet!");
 	         }
 	      }
+
+		@Override
+		public void run() {
+			
+				while(!MapManager.getMap().generated)						//should be done by invocation from receiver instead
+				{
+					try {
+						Thread.sleep(1000);
+						this.repaint();
+						System.out.println("Repainting...");
+						
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					
+				}
+			
+		}
 		
 	 }
 

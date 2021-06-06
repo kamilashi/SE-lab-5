@@ -23,9 +23,10 @@ public class MapReceiver implements Runnable{
 		
 	    if(map != null)
 	    {
-	    map.addRoom(0, 140, (140+140), 70, -100, -100, -100, -100);
-		map.addRoom(0, 0, 140, 140, 70, 140, 110, 140);
-		map.addRoom(140, 0, 140, 140, (140+30), 140, (140+70), 140);
+	    map.generated = false;
+	    //map.addRoom(0, 140, (140+140), 70, -100, -100, -100, -100);
+		//map.addRoom(0, 0, 140, 140, 70, 140, 110, 140);
+		//map.addRoom(140, 0, 140, 140, (140+30), 140, (140+70), 140);
 		MapManager.storeMap(map);
 	    }
 	}
@@ -49,18 +50,22 @@ public class MapReceiver implements Runnable{
 				TextMessage textMessage = (TextMessage) consumer.receive();
 				String payload = textMessage.getText();				
 				
-				Map.MapData mapData = new Gson().fromJson(payload, Map.MapData.class);
-				//MapManager.storeMap(map);
-				MapManager.getMap().setMapData(mapData);
-				MapManager.getMap().generated = true;											//relocate to setGenerated lated
-				connection.close();
+				Map newMap = new Gson().fromJson(payload, Map.class);
+				MapManager.storeMap(newMap);
+				//MapManager.getMap().setMapData(mapData);
+				if(newMap.generated)										//relocate to setGenerated lated
+				{connection.close();
 				break;
+				}
 			}
 			
 			
 		} catch (JMSException e) {
 			e.printStackTrace();
 			System.out.println("Failed to fetch data from the queue.");
+		} catch (IOException e) {
+			System.out.println("Failed to assing a new map.");
+			e.printStackTrace();
 		}
 	}
 	

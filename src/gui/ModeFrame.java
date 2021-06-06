@@ -47,11 +47,15 @@ public class ModeFrame extends JFrame{
 		else {
 			mapPainter =  new gui.MapPainter(false);
 			
-			if(chosenMode=="Auto")
+			if(chosenMode=="Auto")														
 			{
 				//receiver.run();
-				Thread mapReceiverThread = new Thread(receiver);
+				Thread mapReceiverThread = new Thread(receiver);						
 				mapReceiverThread.start();
+				
+				Thread painterUpdateThread = new Thread(mapPainter);						
+				painterUpdateThread.start();
+				
 			}
 		}
 		
