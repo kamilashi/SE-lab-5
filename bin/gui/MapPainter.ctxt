@@ -1,7 +1,8 @@
 #BlueJ class context
 comment0.target=MapPainter
-comment1.params=
-comment1.target=MapPainter()
+comment1.params=drawRoomIndexes
+comment1.target=MapPainter(boolean)
+comment1.text=\r\n\ \ Constructor\ of\ class\ MapPainter.\r\n\ \ @param\ drawRoomIndexes\ boolean\ flag\ that\ indicates\ whether\ the\ room\ indexes\ should\ be\ printed.\ Is\ set\ to\ true\ \r\n\ \ if\ the\ Room\ mode\ has\ been\ chosen.\r\n
 comment2.params=g
 comment2.target=void\ paintComponent(java.awt.Graphics)
 numComments=3
