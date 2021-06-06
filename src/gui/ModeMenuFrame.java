@@ -54,6 +54,17 @@ public class ModeMenuFrame extends JFrame {
 		centerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 20));
 		
 		JButton autoModeButton = new JButton("Auto");
+		autoModeButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				try {
+					gui.ModeFrame autoModeFrame = new gui.ModeFrame("Auto");
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		autoModeButton.setFont(new Font("Roboto", Font.PLAIN, 30));
 		centerPanel.add(autoModeButton);
 		

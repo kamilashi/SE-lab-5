@@ -33,6 +33,8 @@ import program.Tuple;
 	         setBackground(backgroundColor);  // set background color for this JPanel
 	         Color validCoordinateColor = new Color(173, 216, 230);
 	         
+	         try {
+	         
 	         for (Map.Room room:  MapManager.getMap().rooms) {												//rendering borders
 		         g.setColor(Color.BLACK); 
 		         g.drawRect(room.x, room.y, room.width, room.length);
@@ -57,7 +59,10 @@ import program.Tuple;
 	        	 g.drawString(room.roomIndex + "",(room.x+(int)(room.width/2)), (room.y+(int)(room.length/2)));
 	         	}
 	         }
-		     
+		} catch(Exception e)
+	         {
+			System.out.println("nothing to pring yet!");
+	         }
 	      }
 		
 	 }

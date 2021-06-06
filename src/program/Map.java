@@ -8,6 +8,7 @@ public class Map {
 	public int roomsCount;
 	public HashMap<String ,Tuple> coordinates;
 	public ArrayList<Room> rooms;
+	public boolean generated = false;
 	private static boolean instanceCreated = false;
 	
 	private Map()
@@ -146,15 +147,20 @@ public class Map {
 	{
 		if(coordinates.isEmpty())
 		{
-			resetMapData();
+			System.out.println("The map hasn't been generated yet.");
+			System.out.println("Try to generate it in auto mode or load previously saved coordinates.");
 		}
-		
+		else
+		{
 		ArrayList<Tuple> coodrs
         = coordinates.values().stream().filter(x -> (x.X > 0)).collect(
             Collectors.toCollection(ArrayList::new));
 		MapData mapData = new MapData(coodrs);
 		
 		return mapData;
+		}
+		
+		return null;
 	}
 	
 	/**

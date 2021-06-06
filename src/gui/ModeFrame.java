@@ -42,6 +42,11 @@ public class ModeFrame extends JFrame{
 		}
 		else {
 			mapPainter =  new gui.MapPainter(false);
+			
+			if(chosenMode=="Auto")
+			{
+				program.MapReceiver receiver = new program.MapReceiver();
+			}
 		}
 		
 		
@@ -52,13 +57,20 @@ public class ModeFrame extends JFrame{
 				if(chosenMode=="Region")
 				{
 					//clipRegion(e.getX(), e.getY(),20);
+					try {
 					MapManager.updateRegionSettings(e.getX(), e.getY(),20);
+					mapPainter.repaint();
+					}
+					catch(Exception ex) {}
 				}
 				else if(chosenMode == "Room")
 				{
+					try {
 					MapManager.updateRoomSettings(e.getX(), e.getY());
+					mapPainter.repaint();
+					} catch(Exception ex) {}
 				}
-				mapPainter.repaint();
+				
 			}
 		});
 		
@@ -71,7 +83,7 @@ public class ModeFrame extends JFrame{
 		setVisible(true);
 		setEnabled(true);
 		
-		program.MapGenerator generator = new program.MapGenerator();
+		
 
 		  //MapStorage.printMap();
 			
@@ -93,7 +105,6 @@ public class ModeFrame extends JFrame{
 						MapManager.loadSettings();
 						mapPainter.repaint();
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
@@ -112,9 +123,7 @@ public class ModeFrame extends JFrame{
 				public void mousePressed(MouseEvent e) {
 					try {
 						MapManager.saveSettings();
-						//mapPainter.repaint();
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					
@@ -162,8 +171,11 @@ public class ModeFrame extends JFrame{
 			resetButton.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
+					try {
 					MapManager.resetMap();
 					mapPainter.repaint();
+					}
+					catch(Exception ex) {}
 				}
 			});
 			southButtonPanel.setLayout(new GridLayout(0, 2, 0, 0));
