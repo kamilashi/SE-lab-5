@@ -1,4 +1,4 @@
-package lib;
+package program;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 public class Map {
 	public int roomsCount;
-	public static HashMap<String ,Tuple> coordinates;
+	public HashMap<String ,Tuple> coordinates;
 	public ArrayList<Room> rooms;
 	private static boolean instanceCreated = false;
 	

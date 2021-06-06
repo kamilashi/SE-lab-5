@@ -4,9 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
-import lib.Map;
-import lib.Tuple;
-import lib.MapManager;
+import program.Map;
+import program.MapManager;
+import program.Tuple;
 
 	 public class MapPainter extends JPanel {
 		 

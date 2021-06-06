@@ -9,7 +9,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import lib.MapManager;
+
+import program.MapManager;
+
 import javax.swing.JButton;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
@@ -69,7 +71,7 @@ public class ModeFrame extends JFrame{
 		setVisible(true);
 		setEnabled(true);
 		
-		lib.MapGenerator generator = new lib.MapGenerator();
+		program.MapGenerator generator = new program.MapGenerator();
 
 		  //MapStorage.printMap();
 			

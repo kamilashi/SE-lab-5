@@ -1,4 +1,4 @@
-package lib;
+package program;
 
 public class Tuple{
 	public Integer X;

@@ -1,6 +1,5 @@
-package lib;
+package program;
 
-import java.awt.Rectangle;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,8 +8,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import com.google.gson.Gson;
 
-import lib.Map.MapData;
-import lib.Map.Room;
+import program.Map.MapData;
+import program.Map.Room;
 
 public abstract class MapManager {
 
