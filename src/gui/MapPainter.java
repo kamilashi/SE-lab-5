@@ -6,7 +6,6 @@ import javax.swing.JPanel;
 
 import program.Map;
 import program.MapManager;
-import program.Tuple;
 
 	 public class MapPainter extends JPanel {
 		 
@@ -34,7 +33,8 @@ import program.Tuple;
 	         Color validCoordinateColor = new Color(173, 216, 230);
 	         
 	         try {
-	         
+
+					int o = 1+1;
 	         for (Map.Room room:  MapManager.getMap().rooms) {												//rendering borders
 		         g.setColor(Color.BLACK); 
 		         g.drawRect(room.x, room.y, room.width, room.length);
@@ -44,7 +44,7 @@ import program.Tuple;
 	        
 	         //Map map = MapStorage.getMap();
 	         Map.MapData mapData = MapManager.getMap().getMapData();							//rendering valid coordinates
-					for (Tuple tuple :  mapData.getCoordinates())
+					for (Map.Tuple tuple :  mapData.getCoordinates())
 					{
 						int x = tuple.X;
 						int y =  tuple.Y;

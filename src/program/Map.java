@@ -106,6 +106,11 @@ public class Map {
 	 */
 	public void resetMapData() 
 	{
+		if(!generated)
+		{
+			return;
+		}
+		
 		for(Room room : rooms)
 		{
 			int i,j;
@@ -249,4 +254,20 @@ public class Map {
 			 System.out.println("value: " + tuple.toString());
 		}
 	}
+	public class Tuple{
+		public Integer X;
+		public Integer Y;
+		public Tuple(int x, int y) {
+			this.X = x;
+			this.Y = y;
+		}
+		
+		@Override
+		public String toString()
+		{
+			return new String(X + ","+Y);
+		}
+		
+	}
+	
 }

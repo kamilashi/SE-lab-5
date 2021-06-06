@@ -32,6 +32,10 @@ public class ModeFrame extends JFrame{
 
 	public ModeFrame(String mode) throws IOException
 	{
+		
+		Runnable receiver = new program.MapReceiver();				//Instantiate a map
+		
+		
 		chosenMode = mode;
 		ScreenSizeManager.fetchScreenInfo();
 		screenSize = ScreenSizeManager.getScreenDimension();
@@ -45,7 +49,9 @@ public class ModeFrame extends JFrame{
 			
 			if(chosenMode=="Auto")
 			{
-				program.MapReceiver receiver = new program.MapReceiver();
+				//receiver.run();
+				Thread mapReceiverThread = new Thread(receiver);
+				mapReceiverThread.start();
 			}
 		}
 		
@@ -87,7 +93,7 @@ public class ModeFrame extends JFrame{
 
 		  //MapStorage.printMap();
 			
-			
+		
 		  
 		  JPanel mainPanel = new JPanel();
 		  this.getContentPane().add(mainPanel, BorderLayout.CENTER);
@@ -97,6 +103,12 @@ public class ModeFrame extends JFrame{
 			mainPanel.add(northPanel, BorderLayout.NORTH);
 			northPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 20));
 			
+			JPanel northButtonPanel = new JPanel();
+			northPanel.add(northButtonPanel);
+			northButtonPanel.setLayout(new GridLayout(1, 0, 0, 0));
+			
+			if(chosenMode!="Auto")
+			{
 			JButton loadButton = new JButton("Load");
 			loadButton.addMouseListener(new MouseAdapter() {
 				@Override
@@ -109,13 +121,9 @@ public class ModeFrame extends JFrame{
 					}
 				}
 			});
-			
-			JPanel northButtonPanel = new JPanel();
-			northPanel.add(northButtonPanel);
-			northButtonPanel.setLayout(new GridLayout(1, 0, 0, 0));
-			
 			loadButton.setFont(new Font("Roboto", Font.PLAIN, 20));
 			northButtonPanel.add(loadButton);
+			}
 			
 			JButton saveButton = new JButton("Save");
 			saveButton.addMouseListener(new MouseAdapter() {
@@ -187,7 +195,7 @@ public class ModeFrame extends JFrame{
 			southButtonPanel.add(OKbutton);
 			
 			
-			JLabel pageTitleLabel = new JLabel("       Define " + chosenMode + "            ");
+			JLabel pageTitleLabel = new JLabel("       " + chosenMode + " Mode          ");
 			pageTitleLabel.setPreferredSize(new Dimension(105, 100));
 			pageTitleLabel.setHorizontalAlignment(SwingConstants.LEFT);
 			pageTitleLabel.setFont(new Font("Roboto Light", Font.PLAIN, 30));
@@ -205,27 +213,5 @@ public class ModeFrame extends JFrame{
 		
 	}
 	
-			protected void clipRoom(int x, int y) {
-				try {
-					//Rectangle roomRectangle = MapManager.getRoomRectangle(x,y);
-					
-				}
-				catch(Exception e)
-				{
-					
-				}
-				
-	}
-
-			public void clipRegion(int x, int y, int brushSize)
-			{
-				int i; int j;
-				int halfSize = (brushSize/2);
-				for(i=(x-halfSize);i<(x+halfSize);i++)
-				{
-					for (j=(y-halfSize);j<(y+halfSize);j++)
-					{//MapManager.updateSettings(i, j);
-					}
-				}
-			}
+		
 }
