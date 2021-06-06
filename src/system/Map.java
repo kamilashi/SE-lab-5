@@ -11,7 +11,7 @@ public class Map {
 	public boolean generated = false;
 	private static boolean instanceCreated = false;
 	
-	private Map()
+	public Map()
 	{
 		this.roomsCount = 0;
 		rooms = new ArrayList<>();				//current room limit = 10

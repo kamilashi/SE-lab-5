@@ -37,13 +37,13 @@ public class MapGenerator {
            {
                for ( j = room.y+1; j<(room.y+room.length); j++)
                {
-//                   if(count == 1000){
-//                       count = 0;
-//                   try {Thread.sleep(1000);                            //simulate the time delay while scanning every 100 tuples;
-//                   		sendUpdate(map);
-//                   } catch (InterruptedException e) {
-//                       e.printStackTrace();
-//                   }}   
+                   if(count == 1000){
+                       count = 0;
+                   try {Thread.sleep(1000);                            //simulate the time delay while scanning every 100 tuples;
+                   		sendUpdate(map);
+                   } catch (InterruptedException e) {
+                       e.printStackTrace();
+                   }}   
                    count++;
                    Map.Tuple tuple = map.new Tuple(i,j);
                    map.coordinates.put(tuple.toString(),tuple);
@@ -68,6 +68,8 @@ public class MapGenerator {
            }
        }
        
+       map.generated = true;
+       System.out.println("Map has been generated!");
        sendUpdate(map);
 	   
 	   
@@ -75,7 +77,7 @@ public class MapGenerator {
     
    public void sendUpdate(Map map)
    {
-	   String jsonObject = new Gson().toJson(map.getMapData());
+	   String jsonObject = new Gson().toJson(map);
 	   
 	   try {
 		   BasicConfigurator.configure();
