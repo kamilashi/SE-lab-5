@@ -13,13 +13,10 @@ import org.apache.log4j.BasicConfigurator;
 import com.google.gson.Gson;
 
 public class MapGenerator {
-	//apTransmitter transmitter = null;
 	ActiveMQConnectionFactory jmsConnectionFactory;
 
     public MapGenerator()
     {
-    	
-    	
         Map map = Map.getInstance();
 
         map.addRoom(0, 140, (140+140), 70, -100, -100, -100, -100);
@@ -55,18 +52,15 @@ public class MapGenerator {
            }
 
            Map.Tuple tuple = map.new Tuple(room.doorX1,room.doorY1 );
-           //System.out.println(tuple.toString() + "  new door ");
 
            if(tuple.X >= 0)			//if there is a valid door
            {
-               //float length = (float) Math.sqrt((room.doorY2-room.doorY1)*(room.doorY2-room.doorY1) + (room.doorX2-room.doorX1)*(room.doorX2-room.doorX1));
-
                float cumulative = (float) 0.01;
                while ((tuple.X < room.doorX2)||(tuple.Y < room.doorY2))
                {
                    count++;
                    tuple = map.lerp(room.doorX1,room.doorY1,room.doorX2,room.doorY2,cumulative);
-                   System.out.println("lerp "+ tuple.toString() + "   at " + cumulative + " %");
+                   //System.out.println("lerp "+ tuple.toString() + "   at " + cumulative + " %");
                    map.coordinates.put(tuple.toString(),tuple);
                    cumulative+=0.005;
 
@@ -82,12 +76,10 @@ public class MapGenerator {
    public void sendUpdate(Map map)
    {
 	   String jsonObject = new Gson().toJson(map.getMapData());
+	   
 	   try {
 		   BasicConfigurator.configure();
 		   jmsConnectionFactory = new ActiveMQConnectionFactory("tcp://" + "localhost" + ":" + 61616);
-	        
-		   
-		   
 		   
 		Connection connection = jmsConnectionFactory.createConnection("admin","admin");
 		connection.start();
@@ -100,7 +92,6 @@ public class MapGenerator {
 		System.out.println("Sent message to queque!");
 		   
 	} catch (JMSException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 		System.out.println("Failed to send data to the queue.");
 	}

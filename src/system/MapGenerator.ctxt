@@ -2,4 +2,8 @@
 comment0.target=MapGenerator
 comment1.params=
 comment1.target=MapGenerator()
-numComments=2
+comment2.params=map
+comment2.target=void\ scan(Map)
+comment3.params=map
+comment3.target=void\ sendUpdate(Map)
+numComments=4
